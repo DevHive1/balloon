@@ -1,0 +1,26 @@
+~/ballooncg/ballooncg-website $ npx next build --webpack
+  Skipping creating a lockfile at /data/data/com.termux/files/home/ballooncg/ballooncg-website/.next/lock because we're using WASM bindings
+▲ Next.js 16.2.10 (webpack)
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 9.1s
+  Skipping validation of types
+✓ Finished TypeScript config validation in 15ms
+✓ Collecting page data using 1 worker in 1268ms
+Error occurred prerendering page "/". Read more: https://nextjs.org/docs/messages/prerender-error
+ReferenceError:  is not defined
+    at 7859 (.next/server/app/page.js:10:8595)
+    at Object.g [as require] (.next/server/webpack-runtime.js:1:135) {
+  digest: '1326027759'
+}
+Export encountered an error on /page: /, exiting the build.
+⨯ Next.js build worker exited with code: 1 and signal: null
+~/ballooncg/ballooncg-website $
+
+
+
+
+
+
+
+
