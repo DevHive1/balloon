@@ -9,7 +9,7 @@ const FacebookFallback = ({ size = 20 }) => <Globe size={size} />;
 const LinkedinFallback = ({ size = 20 }) => <MessageSquare size={size} />;
 
 const socialLinks = [
-  { name: 'Instagram', href: 'https://instagram.com/ballooncg', icon: InstagramFallback },
+  { name: 'Instagram', href: 'https://www.instagram.com/balloon.cg?igsh=MXYyengxOHV0NTNxNw==', icon: InstagramFallback },
   { name: 'Facebook', href: 'https://facebook.com/ballooncg', icon: FacebookFallback },
   { name: 'LinkedIn', href: 'https://linkedin.com/company/ballooncg', icon: LinkedinFallback },
 ];
