@@ -1,54 +1,39 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion, useSpring } from 'framer-motion';
 
 export default function CustomCursor() {
-  const [cursorType, setCursorType] = useState<'default' | 'pointer' | 'text'>('default');
-  
-  const springConfig = { damping: 25, stiffness: 150 };
-  const mouseX = useSpring(0, springConfig);
-  const mouseY = useSpring(0, springConfig);
+  const mouseX = useSpring(0, { stiffness: 500, damping: 30 });
+  const mouseY = useSpring(0, { stiffness: 500, damping: 30 });
+  const [isHovering, setIsHovering] = useState(false);
 
   useEffect(() => {
-    const moveCursor = (e: MouseEvent) => {
+    const handleMouseMove = (e: MouseEvent) => {
       mouseX.set(e.clientX);
       mouseY.set(e.clientY);
     };
 
-    const handlePointer = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      
-      if (target) {
-        // Use double negation to force a boolean result from the closest() call
-        const isInteractive = !!target.closest('a, button, .btn-luxury');
-        
-        if (isInteractive) {
-          setCursorType('pointer');
-        } else if ((window.getSelection()?.toString()?.length ?? 0) > 0) {
-          setCursorType('text');
-        } else {
-          setCursorType('default');
-        }
+    const handleHover = (e: MouseEvent) => {
+      if ((e.target as HTMLElement).closest('button, a, .flat-card')) {
+        setIsHovering(true);
       } else {
-        setCursorType('default');
+        setIsHovering(false);
       }
     };
 
-    window.addEventListener('mousemove', moveCursor);
-    window.addEventListener('mousedown', handlePointer);
-    window.addEventListener('mouseup', handlePointer);
-    
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mouseover', handleHover);
+
     return () => {
-      window.removeEventListener('mousemove', moveCursor);
-      window.removeEventListener('mousedown', handlePointer);
-      window.removeEventListener('mouseup', handlePointer);
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseover', handleHover);
     };
-  }, [mouseX, mouseY]);
+  }, []);
 
   return (
     <motion.div
-      className="fixed top-0 left-0 w-6 h-6 rounded-full pointer-events-none z-[9999] mix-blend-difference"
+      className="fixed top-0 left-0 w-6 h-6 rounded-full bg-neo-cyan mix-blend-difference pointer-events-none z-[9999] flex items-center justify-center"
       style={{
         x: mouseX,
         y: mouseY,
@@ -56,12 +41,12 @@ export default function CustomCursor() {
         translateY: '-50%',
       }}
       animate={{
-        scale: cursorType === 'pointer' ? 2.5 : 1,
-        backgroundColor: cursorType === 'pointer' ? 'var(--accent-primary)' : 'white',
+        scale: isHovering ? 2.5 : 1,
+        backgroundColor: isHovering ? "#ff00ff" : "#00f3ff",
       }}
-      transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+      transition={{ type: 'spring', stiffness: 300, damping: 20 }}
     >
-      <div className="w-full h-full rounded-full border border-white/20" />
+      <div className="w-1 h-1 bg-white rounded-full" />
     </motion.div>
   );
 }

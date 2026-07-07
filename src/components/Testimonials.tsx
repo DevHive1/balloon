@@ -42,83 +42,87 @@ export default function Testimonials() {
   const prev = () => setCurrent((prev) => (prev - 1 + testimonials.length) % testimonials.length);
 
   return (
-    <section className="py-24 relative overflow-hidden">
-      <div className="absolute inset-0 opacity-30">
-        <div className="absolute top-1/2 left-0 w-72 h-72 bg-[var(--accent-pink)] rounded-full blur-[150px]" />
-        <div className="absolute bottom-1/2 right-0 w-72 h-72 bg-[var(--accent-secondary)] rounded-full blur-[150px]" />
-      </div>
+    <>
+      <section className="py-24 relative overflow-hidden">
+        {/* Background Glows */}
+        <div className="absolute inset-0 opacity-30">
+          <div className="absolute top-1/2 left-0 w-72 h-72 bg-neo-cyan rounded-full blur-[150px]" />
+          <div className="absolute bottom-1/2 right-0 w-72 h-72 bg-neo-purple rounded-full blur-[150px]" />
+        </div>
 
-      <div className="section-container relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <span className="text-[var(--accent-primary)] font-medium">Testimonials</span>
-          <h2 className="text-4xl md:text-5xl font-bold mt-2 mb-4">
-            What Our <span className="text-gradient">Clients Say</span>
-          </h2>
-        </motion.div>
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <span className="text-neo-cyan font-medium">Testimonials</span>
+            <h2 className="text-4xl md:text-5xl font-bold mt-2 mb-4 text-white">
+              What Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-neo-cyan to-neo-magenta">Clients Say</span>
+            </h2>
+          </motion.div>
 
-        <div className="max-w-4xl mx-auto">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={current}
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -50 }}
-              transition={{ duration: 0.3 }}
-              className="glass-card p-8 md:p-12 text-center"
-            >
-              <div className="flex justify-center gap-1 mb-6">
-                {[...Array(testimonials[current].rating)].map((_, i) => (
-                  <Star key={i} size={24} className="fill-[var(--accent-orange)] text-[var(--accent-orange)]" />
+          <div className="max-w-4xl mx-auto">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={current}
+                initial={{ opacity: 0, x: 50 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -50 }}
+                transition={{ duration: 0.3 }}
+                className="flat-card p-8 md:p-12 text-center"
+              >
+                <div className="flex justify-center gap-1 mb-6">
+                  {[...Array(testimonials[current].rating)].map((_, i) => (
+                    <Star key={i} size={24} className="fill-neo-cyan text-neo-cyan" />
+                  ))}
+                </div>
+                <blockquote className="text-xl md:text-2xl text-white mb-8 italic">
+                  &ldquo;{testimonials[current].content}&rdquo;
+                </blockquote>
+                <div>
+                  <div className="font-semibold text-lg text-white">{testimonials[current].name}</div>
+                  <div className="text-white/50">{testimonials[current].role}</div>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+
+            <div className="flex justify-center gap-4 mt-8">
+              <motion.button
+                onClick={prev}
+                className="w-12 h-12 rounded-full flat-card flex items-center justify-center hover:bg-neo-cyan/20 transition-colors"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                <ChevronLeft size={24} className="text-white" />
+              </motion.button>
+              <div className="flex items-center gap-2">
+                {testimonials.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrent(index)}
+                    className={`w-2 h-2 rounded-full transition-all ${
+                      index === current
+                        ? 'w-8 bg-neo-cyan'
+                        : 'bg-white/30'
+                    }`}
+                  />
                 ))}
               </div>
-              <blockquote className="text-xl md:text-2xl text-[var(--text-main)] mb-8 italic">
-                &ldquo;{testimonials[current].content}&rdquo;
-              </blockquote>
-              <div>
-                <div className="font-semibold text-lg">{testimonials[current].name}</div>
-                <div className="text-[var(--text-muted)]">{testimonials[current].role}</div>
-              </div>
-            </motion.div>
-          </AnimatePresence>
-
-          <div className="flex justify-center gap-4 mt-8">
-            <motion.button
-              onClick={prev}
-              className="w-12 h-12 rounded-full bg-[var(--bg-tertiary)] border border-[var(--border-light)] flex items-center justify-center hover:border-[var(--accent-primary)] transition-colors"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-            >
-              <ChevronLeft size={24} />
-            </motion.button>
-            <div className="flex items-center gap-2">
-              {testimonials.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrent(index)}
-                  className={`w-2 h-2 rounded-full transition-all ${
-                    index === current
-                      ? 'w-8 bg-[var(--accent-primary)]'
-                      : 'bg-[var(--text-muted)]'
-                  }`}
-                />
-              ))}
+              <motion.button
+                onClick={next}
+                className="w-12 h-12 rounded-full flat-card flex items-center justify-center hover:bg-neo-cyan/20 transition-colors"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                <ChevronRight size={24} className="text-white" />
+              </motion.button>
             </div>
-            <motion.button
-              onClick={next}
-              className="w-12 h-12 rounded-full bg-[var(--bg-tertiary)] border border-[var(--border-light)] flex items-center justify-center hover:border-[var(--accent-primary)] transition-colors"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-            >
-              <ChevronRight size={24} />
-            </motion.button>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+      <div className="section-divider" />
+    </>
   );
 }

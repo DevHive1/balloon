@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import CustomCursor from '@/components/CustomCursor';
+import Navbar from "@/components/Navbar";
+import PageTransition from "@/components/PageTransition";
+import CustomCursor from "@/components/CustomCursor";
+import AnimatedBackground from "@/components/AnimatedBackground";
 
 export const metadata: Metadata = {
   title: 'Balloon CG Visuals | Premium Event Visual Solutions',
@@ -21,9 +24,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="antialiased cursor-none">
+      <body className="bg-neo-void text-foreground antialiased">
+        <AnimatedBackground />
         <CustomCursor />
-        {children}
+        <Navbar />
+        <PageTransition>
+          {children}
+        </PageTransition>
       </body>
     </html>
   );
