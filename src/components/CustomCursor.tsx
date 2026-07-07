@@ -25,7 +25,7 @@ export default function CustomCursor() {
         
         if (isInteractive) {
           setCursorType('pointer');
-        } else if ((window.getSelection()?.toString() ?? '').length > 0) {
+        } else if ((window.getSelection()?.toString()?.length ?? 0) > 0) {
           setCursorType('text');
         } else {
           setCursorType('default');
